@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="MINI TROPA - Conquiste o Brasil neste jogo de estratégia por turnos!">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>MINI TROPA - Conquista do Brasil</title>
+    
+    <!-- PWA manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/icon-512x512.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Leaflet CSS for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Main Menu Screen -->
+    <div id="menuScreen" class="screen active">
+        <div class="menu-container">
+            <h1 class="game-title">🎮 MINI TROPA</h1>
+            <h2 class="game-subtitle">Conquista do Brasil</h2>
+            
+            <div class="menu-buttons">
+                <button class="btn btn-primary" onclick="game.showCharacterSelection()">🎯 Novo Jogo</button>
+                <button class="btn btn-secondary" onclick="game.showRules()">📖 Como Jogar</button>
+                <button class="btn btn-secondary" onclick="game.showCredits()">ℹ️ Sobre</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Character Selection Screen -->
+    <div id="characterScreen" class="screen">
+        <div class="character-container">
+            <h2 class="screen-title">Escolha seu Comandante</h2>
+            
+            <div class="characters-grid" id="charactersList">
+                <!-- Characters will be loaded dynamically -->
+            </div>
+            
+            <button class="btn btn-back" onclick="game.showMenu()">⬅️ Voltar</button>
+        </div>
+    </div>
+    
+    <!-- Rules Screen -->
+    <div id="rulesScreen" class="screen">
+        <div class="rules-container">
+            <h2 class="screen-title">📖 Como Jogar</h2>
+            
+            <div class="rules-content">
+                <div class="rule-section">
+                    <h3>🎯 Objetivo</h3>
+                    <p>Conquistar todas as cidades do Brasil e se tornar <strong>PRESIDENTE</strong>!</p>
+                </div>
+                
+                <div class="rule-section">
+                    <h3>🎲 Mecânica dos Dados</h3>
+                    <ul>
+                        <li>Role 2 dados por turno</li>
+                        <li>Use os valores para conquistar cidades</li>
+                        <li><strong>Dados duplicados = ganhe soldados extras!</strong></li>
+                        <li>Exemplo: 3+3 = ganhe +3 soldados</li>
+                    </ul>
+                </div>
+                
+                <div class="rule-section">
+                    <h3>🏙️ Conquistas</h3>
+                    <ul>
+                        <li>Só pode conquistar cidades adjacentes às suas</li>
+                        <li>Cidade: +10 pontos</li>
+                        <li>Estado Completo: +100 pontos</li>
+                        <li>Região Completa: +500 pontos</li>
+                    </ul>
+                </div>
+                
+                <div class="rule-section">
+                    <h3>⚔️ Estratégia</h3>
+                    <ul>
+                        <li>Distribua soldados estrategicamente</li>
+                        <li>Complete estados para bônus</li>
+                        <li>Use habilidades especiais do seu comandante</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <button class="btn btn-back" onclick="game.showMenu()">⬅️ Voltar</button>
+        </div>
+    </div>
+    
+    <!-- Credits Screen -->
+    <div id="creditsScreen" class="screen">
+        <div class="credits-container">
+            <h2 class="screen-title">ℹ️ Sobre o Jogo</h2>
+            
+            <div class="credits-content">
+                <h3>MINI TROPA</h3>
+                <p>Versão 1.0.0</p>
+                
+                <div class="credits-section">
+                    <h4>🚀 Tecnologias</h4>
+                    <ul>
+                        <li>HTML5, CSS3, JavaScript</li>
+                        <li>Leaflet.js para mapas</li>
+                        <li>Dados do IBGE</li>
+                        <li>PWA para mobile</li>
+                    </ul>
+                </div>
+                
+                <div class="credits-section">
+                    <p>Desenvolvido com ❤️ para conquistar o Brasil! 🇧🇷</p>
+                </div>
+            </div>
+            
+            <button class="btn btn-back" onclick="game.showMenu()">⬅️ Voltar</button>
+        </div>
+    </div>
+    
+    <!-- Game Screen -->
+    <div id="gameScreen" class="screen">
+        <!-- Game Header -->
+        <div class="game-header">
+            <div class="header-left">
+                <button class="btn-icon" onclick="game.showGameMenu()">☰</button>
+                <div class="player-info">
+                    <span class="player-name" id="playerName">Jogador</span>
+                    <span class="player-color" id="playerColorIndicator"></span>
+                </div>
+            </div>
+            
+            <div class="header-stats">
+                <div class="stat">
+                    <span class="stat-label">Pontos</span>
+                    <span class="stat-value" id="playerPoints">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Soldados</span>
+                    <span class="stat-value" id="playerSoldiers">7</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Cidades</span>
+                    <span class="stat-value" id="playerCities">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Map Container -->
+        <div id="mapContainer" class="map-container">
+            <div id="map"></div>
+        </div>
+        
+        <!-- Game Controls -->
+        <div class="game-controls">
+            <div class="dice-section">
+                <div class="dice-display">
+                    <div class="dice" id="dice1">?</div>
+                    <div class="dice" id="dice2">?</div>
+                </div>
+                <button class="btn btn-primary btn-roll" id="rollButton" onclick="game.rollDice()">
+                    🎲 Rolar Dados
+                </button>
+            </div>
+            
+            <div class="action-section">
+                <div id="actionMessage" class="action-message">Role os dados para começar!</div>
+                <div id="actionButtons" class="action-buttons">
+                    <!-- Dynamic action buttons will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Game Menu Overlay -->
+    <div id="gameMenuOverlay" class="overlay">
+        <div class="overlay-content">
+            <h3>Menu do Jogo</h3>
+            <button class="btn btn-secondary" onclick="game.hideGameMenu()">▶️ Continuar</button>
+            <button class="btn btn-secondary" onclick="game.restartGame()">🔄 Reiniciar</button>
+            <button class="btn btn-secondary" onclick="game.quitToMenu()">⬅️ Menu Principal</button>
+        </div>
+    </div>
+    
+    <!-- Victory Overlay -->
+    <div id="victoryOverlay" class="overlay">
+        <div class="overlay-content victory-content">
+            <h2>🎉 VITÓRIA! 🎉</h2>
+            <h3>Você é o novo PRESIDENTE do Brasil!</h3>
+            <div id="victoryStats" class="victory-stats">
+                <!-- Victory statistics will be shown here -->
+            </div>
+            <button class="btn btn-primary" onclick="game.restartGame()">🔄 Jogar Novamente</button>
+            <button class="btn btn-secondary" onclick="game.quitToMenu()">⬅️ Menu Principal</button>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="game.js"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => console.log('ServiceWorker registered'))
+                    .catch(err => console.log('ServiceWorker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>

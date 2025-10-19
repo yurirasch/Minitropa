@@ -1,0 +1,38 @@
+{
+  "states": [
+    {"id": "AC", "name": "Acre", "region": "Norte", "capital": "Rio Branco"},
+    {"id": "AL", "name": "Alagoas", "region": "Nordeste", "capital": "Maceió"},
+    {"id": "AP", "name": "Amapá", "region": "Norte", "capital": "Macapá"},
+    {"id": "AM", "name": "Amazonas", "region": "Norte", "capital": "Manaus"},
+    {"id": "BA", "name": "Bahia", "region": "Nordeste", "capital": "Salvador"},
+    {"id": "CE", "name": "Ceará", "region": "Nordeste", "capital": "Fortaleza"},
+    {"id": "DF", "name": "Distrito Federal", "region": "Centro-Oeste", "capital": "Brasília"},
+    {"id": "ES", "name": "Espírito Santo", "region": "Sudeste", "capital": "Vitória"},
+    {"id": "GO", "name": "Goiás", "region": "Centro-Oeste", "capital": "Goiânia"},
+    {"id": "MA", "name": "Maranhão", "region": "Nordeste", "capital": "São Luís"},
+    {"id": "MT", "name": "Mato Grosso", "region": "Centro-Oeste", "capital": "Cuiabá"},
+    {"id": "MS", "name": "Mato Grosso do Sul", "region": "Centro-Oeste", "capital": "Campo Grande"},
+    {"id": "MG", "name": "Minas Gerais", "region": "Sudeste", "capital": "Belo Horizonte"},
+    {"id": "PA", "name": "Pará", "region": "Norte", "capital": "Belém"},
+    {"id": "PB", "name": "Paraíba", "region": "Nordeste", "capital": "João Pessoa"},
+    {"id": "PR", "name": "Paraná", "region": "Sul", "capital": "Curitiba"},
+    {"id": "PE", "name": "Pernambuco", "region": "Nordeste", "capital": "Recife"},
+    {"id": "PI", "name": "Piauí", "region": "Nordeste", "capital": "Teresina"},
+    {"id": "RJ", "name": "Rio de Janeiro", "region": "Sudeste", "capital": "Rio de Janeiro"},
+    {"id": "RN", "name": "Rio Grande do Norte", "region": "Nordeste", "capital": "Natal"},
+    {"id": "RS", "name": "Rio Grande do Sul", "region": "Sul", "capital": "Porto Alegre"},
+    {"id": "RO", "name": "Rondônia", "region": "Norte", "capital": "Porto Velho"},
+    {"id": "RR", "name": "Roraima", "region": "Norte", "capital": "Boa Vista"},
+    {"id": "SC", "name": "Santa Catarina", "region": "Sul", "capital": "Florianópolis"},
+    {"id": "SP", "name": "São Paulo", "region": "Sudeste", "capital": "São Paulo"},
+    {"id": "SE", "name": "Sergipe", "region": "Nordeste", "capital": "Aracaju"},
+    {"id": "TO", "name": "Tocantins", "region": "Norte", "capital": "Palmas"}
+  ],
+  "regions": [
+    {"name": "Norte", "states": ["AC", "AP", "AM", "PA", "RO", "RR", "TO"]},
+    {"name": "Nordeste", "states": ["AL", "BA", "CE", "MA", "PB", "PE", "PI", "RN", "SE"]},
+    {"name": "Centro-Oeste", "states": ["DF", "GO", "MT", "MS"]},
+    {"name": "Sudeste", "states": ["ES", "MG", "RJ", "SP"]},
+    {"name": "Sul", "states": ["PR", "RS", "SC"]}
+  ]
+}

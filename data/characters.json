@@ -1,0 +1,40 @@
+{
+  "characters": [
+    {
+      "id": "matheus",
+      "name": "Capitão Matheus",
+      "icon": "🟡",
+      "color": "#FFD700",
+      "specialty": "O Estrategista",
+      "ability": "Ganha +1 soldado extra em cada conquista",
+      "abilityType": "extra_soldier"
+    },
+    {
+      "id": "thomas",
+      "name": "Major Thomás",
+      "icon": "🔵",
+      "color": "#4169E1",
+      "specialty": "O Tático",
+      "ability": "Pode atacar cidades a 2 distâncias",
+      "abilityType": "long_range"
+    },
+    {
+      "id": "caua",
+      "name": "Super Intendente Cauã",
+      "icon": "🔴",
+      "color": "#DC143C",
+      "specialty": "O Conquistador",
+      "ability": "Recebe +50% de pontos em todas as conquistas",
+      "abilityType": "bonus_points"
+    },
+    {
+      "id": "theo",
+      "name": "Especialista Théo",
+      "icon": "🟢",
+      "color": "#32CD32",
+      "specialty": "O Expansionista",
+      "ability": "Move tropas entre cidades sem custo",
+      "abilityType": "free_movement"
+    }
+  ]
+}

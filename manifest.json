@@ -1,0 +1,27 @@
+{
+  "name": "MINI TROPA - Conquista do Brasil",
+  "short_name": "MINI TROPA",
+  "description": "Jogo de estratégia por turnos para conquistar o Brasil!",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "lang": "pt-BR",
+  "dir": "ltr"
+}

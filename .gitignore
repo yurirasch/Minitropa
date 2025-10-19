@@ -1,0 +1,21 @@
+# Development files
+.DS_Store
+*.log
+*.swp
+*.swo
+*~
+
+# Editor directories
+.vscode/
+.idea/
+
+# Temporary files
+tmp/
+temp/
+
+# Node modules (if we add any build tools later)
+node_modules/
+
+# Generated files that were only for development
+assets/icons/generate-icons.html
+assets/icons/*.svg

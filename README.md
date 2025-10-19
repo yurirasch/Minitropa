@@ -61,12 +61,12 @@ Conquistar todas as cidades do Brasil através de estratégia, sorte nos dados e
 
 - HTML5, CSS3, JavaScript
 - Leaflet.js para mapas
-- PWA (Progressive Web App)
 - Dados do IBGE
+- PWA para mobile
 
 ## 📱 Como Jogar
 
-Acesse pelo navegador mobile e instale como app!
+Acesse pelo navegador mobile e instale como PWA!
 
 ---
 

@@ -90,6 +90,12 @@ class MiniTropaGame {
         if (!this.map) {
             this.initMap();
         }
+        
+        // If map is not available, show city list
+        if (!this.map || typeof L === 'undefined') {
+            this.showCityList();
+        }
+        
         this.updateUI();
     }
     
@@ -147,6 +153,13 @@ class MiniTropaGame {
     
     // Map Initialization
     initMap() {
+        // Check if Leaflet is available
+        if (typeof L === 'undefined') {
+            console.error('Leaflet library not loaded. Map will not be displayed.');
+            document.getElementById('map').innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #e0e0e0; color: #333; font-size: 1.2rem; padding: 20px; text-align: center;">Mapa não disponível. O jogo ainda é jogável através dos controles abaixo.</div>';
+            return;
+        }
+        
         // Initialize Leaflet map centered on Brazil
         this.map = L.map('map', {
             zoomControl: false,
@@ -169,6 +182,12 @@ class MiniTropaGame {
     }
     
     renderCities() {
+        // Check if map is available
+        if (!this.map || typeof L === 'undefined') {
+            console.log('Map not available, skipping city rendering');
+            return;
+        }
+        
         // Clear existing markers
         Object.values(this.markers).forEach(marker => marker.remove());
         this.markers = {};
@@ -229,6 +248,64 @@ class MiniTropaGame {
     
     onCityClick(city) {
         // Additional click handling if needed
+    }
+    
+    showCityList() {
+        const mapContainer = document.getElementById('map');
+        
+        // Create a scrollable city list
+        let html = '<div style="height: 100%; overflow-y: auto; padding: 15px; background: #f5f5f5;">';
+        html += '<h3 style="color: #1a1a2e; margin-bottom: 15px;">🏙️ Cidades do Brasil</h3>';
+        html += '<div style="display: grid; gap: 10px;">';
+        
+        // Group cities by state
+        const citiesByState = {};
+        this.gameState.cities.forEach(city => {
+            if (!citiesByState[city.state]) {
+                citiesByState[city.state] = [];
+            }
+            citiesByState[city.state].push(city);
+        });
+        
+        // Render cities
+        Object.keys(citiesByState).sort().forEach(stateId => {
+            const state = this.states.find(s => s.id === stateId);
+            html += `<div style="background: white; padding: 10px; border-radius: 8px; border-left: 4px solid #0f3460;">`;
+            html += `<strong style="color: #1a1a2e;">${state ? state.name : stateId}</strong>`;
+            html += '<div style="margin-top: 8px; display: flex; flex-direction: column; gap: 5px;">';
+            
+            citiesByState[stateId].forEach(city => {
+                const isOwned = city.owner === 'player';
+                const isConquerable = this.isCityConquerable(city.id);
+                
+                let bgColor = '#e0e0e0';
+                let borderColor = '#999';
+                let textColor = '#333';
+                
+                if (isOwned) {
+                    bgColor = this.player.color + '33';
+                    borderColor = this.player.color;
+                    textColor = '#000';
+                } else if (isConquerable && this.gameState.diceRolled) {
+                    bgColor = '#FFA50033';
+                    borderColor = '#FFA500';
+                }
+                
+                html += `<div style="background: ${bgColor}; padding: 8px; border-radius: 5px; border: 2px solid ${borderColor}; color: ${textColor}; display: flex; justify-content: space-between; align-items: center;">`;
+                html += `<div><strong>${city.name}</strong> ${isOwned ? '✓' : ''}<br><small>Soldados: ${city.soldiers}</small></div>`;
+                
+                if (isConquerable && this.gameState.diceRolled) {
+                    html += `<button onclick="game.conquerCity('${city.id}')" style="background: #e94560; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">⚔️ Conquistar</button>`;
+                }
+                
+                html += '</div>';
+            });
+            
+            html += '</div></div>';
+        });
+        
+        html += '</div></div>';
+        mapContainer.innerHTML = html;
     }
     
     // Game Mechanics
@@ -396,7 +473,13 @@ class MiniTropaGame {
         }
         
         this.updateUI();
-        this.renderCities();
+        
+        // Update map or city list
+        if (this.map && typeof L !== 'undefined') {
+            this.renderCities();
+        } else {
+            this.showCityList();
+        }
     }
     
     // UI Updates
